@@ -253,6 +253,7 @@ export class SimulationEngine {
       const sev = s.risk.overallRisk === 'CRITICAL' || s.risk.overallRisk === 'HIGH' ? 'critical' :
                   s.risk.overallRisk === 'MEDIUM' ? 'warning' : 'info';
       this.addEvent('risk_level_change', `Collision risk: ${s.risk.overallRisk}`, sev);
+      this.planningCooldown = 0; // force immediate replan on risk change
     }
 
     // 8. Decision engine
@@ -263,14 +264,15 @@ export class SimulationEngine {
       const sev = s.decision.state === 'EMERGENCY_BRAKE' ? 'critical' :
                   s.decision.state === 'STOP' || s.decision.state === 'REPLAN' ? 'warning' : 'info';
       this.addEvent('decision_change', `Decision: ${s.decision.state} — ${s.decision.reason}`, sev);
+      this.planningCooldown = 0; // force immediate replan on decision change
     }
 
     // 9. Path planning (throttled, run every ~200ms sim time or when replanning needed)
     this.planningCooldown -= dt;
     const needsReplan = s.risk.overallRisk === 'HIGH' || s.risk.overallRisk === 'CRITICAL' ||
-                        s.decision.state === 'REPLAN' || s.plannedPath === null;
+                        s.decision.state === 'REPLAN';
     
-    if (this.planningCooldown <= 0 || needsReplan) {
+    if (this.planningCooldown <= 0 || s.plannedPath === null) {
       const planStart = performance.now();
       const prevPath = s.plannedPath;
       s.plannedPath = planPath(s.vehicle, s.scenario, s.trackedObjects, s.predictions, s.risk, this.config);
@@ -304,10 +306,12 @@ export class SimulationEngine {
       this.decelerationHistory.push(Math.abs(s.vehicle.acceleration));
     }
 
+    const prevClearance = s.metrics.avgClearance;
+
     s.metrics = this.updateMetrics(s.metrics, s);
 
     // 12. Check near-miss (clearance < 2m)
-    if (s.risk.minClearance < 2.0 && s.risk.minClearance > 0.5) {
+    if (s.risk.minClearance < 2.0 && s.risk.minClearance > 0.5 && prevClearance >= 2.0) {
       s.metrics.nearMissCount++;
       this.addEvent('near_miss', `Near miss! Clearance: ${s.risk.minClearance.toFixed(1)}m`, 'critical');
     }
@@ -349,7 +353,10 @@ export class SimulationEngine {
       if (agent) agent.isActive = true;
     }
     this.addEvent(event.eventType, event.description, 'critical', { scenarioEventId: event.id });
-    this.handleInjectedEvent(event.eventType, event.position);
+    
+    if (!event.agentId) {
+      this.handleInjectedEvent(event.eventType, event.position);
+    }
   }
 
   private handleInjectedEvent(type: InjectedEventType, position?: Vector2) {

@@ -88,14 +88,14 @@ export const highwayMergeScenario: ScenarioConfig = {
   events: [
     {
       id: 'evt-moto',
-      triggerTime: 4,
+      triggerTime: 33,
       eventType: 'vehicle_cut_in',
       agentId: 'moto-weave',
       description: 'Motorcycle making erratic lane change during merge',
     },
     {
       id: 'evt-wrong',
-      triggerTime: 12,
+      triggerTime: 28,
       eventType: 'wrong_side_vehicle',
       agentId: 'wrong-side',
       description: 'Vehicle approaching on wrong side of highway',

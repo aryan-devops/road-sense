@@ -117,21 +117,21 @@ export const urbanIntersectionScenario: ScenarioConfig = {
   events: [
     {
       id: 'evt-moto-cut',
-      triggerTime: 5,
+      triggerTime: 38,
       eventType: 'vehicle_cut_in',
       agentId: 'moto-cut',
       description: 'Motorcycle cutting in at intersection',
     },
     {
       id: 'evt-ped-cross',
-      triggerTime: 7,
+      triggerTime: 42,
       eventType: 'pedestrian_cross',
       agentId: 'ped-cross-1',
       description: 'Pedestrians crossing unsignalized intersection',
     },
     {
       id: 'evt-ped-cross-2',
-      triggerTime: 7.5,
+      triggerTime: 43,
       eventType: 'pedestrian_cross',
       agentId: 'ped-cross-2',
       description: 'Second pedestrian crossing',

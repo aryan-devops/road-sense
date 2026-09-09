@@ -134,6 +134,9 @@ function SimulationContent() {
     // Save to localStorage for history (Supabase save would go here)
     if (!stateRef.current) return;
     const history = JSON.parse(localStorage.getItem('roadsense_history') || '[]');
+    if (history.some((h: any) => h.id === stateRef.current!.id)) {
+      return;
+    }
     history.unshift({
       id: stateRef.current.id,
       scenarioName: selectedScenario.name,
@@ -161,11 +164,18 @@ function SimulationContent() {
     (useSimulationStore.getState().engineRef as { current: unknown }).current = engine;
 
     // Sync state to React at ~15Hz
+    let lastReactUpdate = 0;
     engine.on('stateUpdate', (state) => {
+      // Always update stateRef for smooth 60fps Three.js rendering
       stateRef.current = state;
-      // Throttle React state updates (expensive)
-      setSimState({ ...state });
-      setStatus(state.status as 'running' | 'paused' | 'completed');
+      
+      // Throttle React state updates (expensive) to ~15Hz
+      const now = performance.now();
+      if (now - lastReactUpdate > 66 || state.status !== 'running') {
+        lastReactUpdate = now;
+        setSimState({ ...state });
+        setStatus(state.status as 'running' | 'paused' | 'completed');
+      }
     });
 
     engine.on('completed', () => {

@@ -53,7 +53,6 @@ function loadAndNormalizeGLB(
         child.receiveShadow = true;
       }
     });
-
     fallbackMeshes.forEach(mesh => targetGroup.remove(mesh));
     targetGroup.add(model);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,9 +63,9 @@ function loadAndNormalizeGLB(
 
 // Highly Realistic Procedural Material Cache
 const MATERIALS = {
-  carPaintWhite: new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.3, roughness: 0.1, clearcoat: 1.0, clearcoatRoughness: 0.1 }),
-  carPaintSilver: new THREE.MeshStandardMaterial({ color: 0x9ca3af, metalness: 0.8, roughness: 0.2, clearcoat: 0.8 }),
-  carPaintBlack: new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.6, roughness: 0.2, clearcoat: 1.0 }),
+  carPaintWhite: new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.3, roughness: 0.1 }),
+  carPaintSilver: new THREE.MeshStandardMaterial({ color: 0x9ca3af, metalness: 0.8, roughness: 0.2 }),
+  carPaintBlack: new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.6, roughness: 0.2 }),
   carGlass: new THREE.MeshPhysicalMaterial({ color: 0x050505, metalness: 0.9, roughness: 0.1, envMapIntensity: 1.0, transparent: true, opacity: 0.85 }),
   carPlastic: new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.1, roughness: 0.8 }),
   wheelRubber: new THREE.MeshStandardMaterial({ color: 0x0f0f0f, roughness: 0.9 }),

@@ -115,14 +115,14 @@ export const villageRoadScenario: ScenarioConfig = {
   events: [
     {
       id: 'evt-cattle',
-      triggerTime: 6,
+      triggerTime: 41,
       eventType: 'animal_enter',
       agentId: 'cattle-1',
       description: 'Cattle entering road from field',
     },
     {
       id: 'evt-ped',
-      triggerTime: 10,
+      triggerTime: 25,
       eventType: 'pedestrian_cross',
       agentId: 'pedestrian-1',
       description: 'Pedestrian crossing unmarked road',

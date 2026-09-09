@@ -95,10 +95,15 @@ export class EnvironmentBuilder {
     roadGeom.computeVertexNormals();
 
     const roadMat = new THREE.MeshStandardMaterial({
-      color: 0x4a4f54, // Weathered asphalt
-      roughness: 0.85,
+      color: 0x565b60, // Weathered asphalt base
+      roughness: 0.9,
       metalness: 0.1,
+      map: this.createAsphaltTexture(),
     });
+    // Add detail normal map approximation
+    roadMat.bumpMap = roadMat.map;
+    roadMat.bumpScale = 0.02;
+    
     this.roadMesh = new THREE.Mesh(roadGeom, roadMat);
     this.roadMesh.position.set(500, 0.01, 300);
     this.roadMesh.receiveShadow = true;
@@ -461,6 +466,32 @@ export class EnvironmentBuilder {
     });
     this.weatherParticles = new THREE.Points(geom, mat);
     this.scene.add(this.weatherParticles);
+  }
+
+  private createAsphaltTexture(): THREE.Texture {
+    if (typeof document === 'undefined') return new THREE.Texture();
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 512;
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.fillStyle = '#4a4f54';
+      ctx.fillRect(0, 0, 512, 512);
+      // Generate noise
+      for (let i = 0; i < 40000; i++) {
+        const x = Math.random() * 512;
+        const y = Math.random() * 512;
+        const v = Math.random() > 0.5 ? 255 : 0;
+        const a = Math.random() * 0.05; // very subtle noise
+        ctx.fillStyle = `rgba(${v},${v},${v},${a})`;
+        ctx.fillRect(x, y, 2, 2);
+      }
+    }
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.wrapS = THREE.RepeatWrapping;
+    tex.wrapT = THREE.RepeatWrapping;
+    tex.repeat.set(100, 2); // repeat along the road
+    return tex;
   }
 
   update(delta: number, egoX: number) {

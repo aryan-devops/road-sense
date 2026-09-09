@@ -309,6 +309,18 @@ export class ThreeDigitalTwin {
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.0;
 
+      const pmremGenerator = new THREE.PMREMGenerator(renderer);
+      pmremGenerator.compileEquirectangularShader();
+      
+      // Create a basic realistic skybox for reflections
+      const envScene = new THREE.Scene();
+      envScene.background = new THREE.Color(0x87ceeb);
+      const ground = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), new THREE.MeshBasicMaterial({color: 0x827354}));
+      ground.rotation.x = -Math.PI / 2;
+      envScene.add(ground);
+      
+      this.scene.environment = pmremGenerator.fromScene(envScene).texture;
+
       this.renderer = renderer;
       this.webglAvailable = true;
 

@@ -59,7 +59,7 @@ export default function HistoryPage() {
       ) : (
         <div className="space-y-3">
           {history.map((sim, i) => (
-            <motion.div key={sim.id ?? i}
+            <motion.div key={`${sim.id}-${i}`}
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
               className="rs-panel p-5 hover:border-slate-600 transition-colors">
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">

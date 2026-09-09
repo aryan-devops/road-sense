@@ -81,21 +81,21 @@ export const cattleCrossingScenario: ScenarioConfig = {
   events: [
     {
       id: 'evt-cattle-1',
-      triggerTime: 5,
+      triggerTime: 36,
       eventType: 'animal_enter',
       agentId: 'cattle-lead',
       description: 'Lead cattle entering highway from roadside',
     },
     {
       id: 'evt-cattle-2',
-      triggerTime: 5.5,
+      triggerTime: 36.5,
       eventType: 'animal_enter',
       agentId: 'cattle-sudden',
       description: 'Second cattle entering road suddenly',
     },
     {
       id: 'evt-cattle-3',
-      triggerTime: 6,
+      triggerTime: 37,
       eventType: 'animal_enter',
       agentId: 'cattle-3',
       description: 'Third cattle following herd',

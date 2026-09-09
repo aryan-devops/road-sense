@@ -30,8 +30,8 @@ export function evaluateDecision(
     };
   }
 
-  // Stop — no path or blocked
-  if (risk.overallRisk === 'CRITICAL' && risk.minClearance < 2.5) {
+  // Stop — no path or completely blocked
+  if (risk.overallRisk === 'CRITICAL' && (!path || path.collisionCost >= 500)) {
     const blockers = tracks.filter(t => t.distanceToEgo < 8 && t.threatLevel === 'CRITICAL');
     const reason = blockers.length > 0
       ? `${formatAgentType(blockers[0].type)} blocking path at ${blockers[0].distanceToEgo.toFixed(1)}m`
@@ -55,7 +55,8 @@ export function evaluateDecision(
     return {
       state: 'REPLAN',
       reason,
-      targetSpeed: ego.targetSpeed * 0.4,
+      // Keep momentum to swerve, but cautiously
+      targetSpeed: Math.max(ego.targetSpeed * 0.6, 2.0),
       targetHeading: ego.heading,
       confidence: 0.93,
       urgency: 0.8,
@@ -87,7 +88,7 @@ export function evaluateDecision(
     .filter(t => {
       const inFront = t.position.x > ego.position.x; // simplified
       return inFront && t.distanceToEgo < config.safetyDistance * 2 && 
-             (t.type === 'car' || t.type === 'bus' || t.type === 'truck' || t.type === 'auto_rickshaw');
+             (t.type === 'car' || t.type === 'bus' || t.type === 'truck' || t.type === 'auto_rickshaw' || t.type === 'motorcycle' || t.type === 'bicycle' || t.type === 'pushcart');
     })
     .sort((a, b) => a.distanceToEgo - b.distanceToEgo)[0];
 
@@ -124,7 +125,7 @@ export function evaluateDecision(
   if (risk.overallRisk === 'LOW' && risk.minClearance > config.safetyDistance * 1.5) {
     const slowLeader = tracks.find(t =>
       t.distanceToEgo < 25 && t.speed < ego.targetSpeed * 0.5 &&
-      (t.type === 'car' || t.type === 'bus' || t.type === 'truck')
+      (t.type === 'car' || t.type === 'bus' || t.type === 'truck' || t.type === 'auto_rickshaw' || t.type === 'motorcycle' || t.type === 'bicycle' || t.type === 'pushcart')
     );
     if (slowLeader) {
       return {

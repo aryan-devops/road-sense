@@ -97,14 +97,14 @@ export const denseMarketScenario: ScenarioConfig = {
   events: [
     {
       id: 'evt-pushcart',
-      triggerTime: 8,
+      triggerTime: 38,
       eventType: 'pushcart_block',
       agentId: 'pushcart-block',
       description: 'Pushcart vendor blocking narrow market lane',
     },
     {
       id: 'evt-ped-surge',
-      triggerTime: 13,
+      triggerTime: 55,
       eventType: 'pedestrian_cross',
       description: 'Group of pedestrians crossing market road',
     },
