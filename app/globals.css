@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+/* Tailwind v4: auto-scan source files for class names */
+@source "../components/**/*.tsx";
+@source "../app/**/*.tsx";
+@source "../lib/**/*.ts";
+@source "../store/**/*.ts";
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 199 89% 48%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 199 89% 48%;
+    --radius: 0.5rem;
+
+    /* RoadSense custom tokens */
+    --rs-cyan: 199 89% 48%;
+    --rs-cyan-glow: 0 0 20px hsl(199 89% 48% / 0.4);
+    --rs-danger: 0 72% 51%;
+    --rs-warning: 38 92% 50%;
+    --rs-safe: 142 71% 45%;
+    --rs-panel: 220 13% 9%;
+    --rs-panel-border: 220 13% 18%;
+    --rs-road: 220 13% 12%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground));
+  }
+}
+
+@layer components {
+  /* ─── Glass Panel ──────────────────────────────────────────── */
+  .rs-panel {
+    @apply bg-slate-900/80 border border-slate-700/50 rounded-xl backdrop-blur-sm;
+  }
+  .rs-panel-glow {
+    background-color: rgb(15 23 42 / 0.8);
+    border: 1px solid rgb(51 65 85 / 0.5);
+    border-radius: 0.75rem;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 10px 15px -3px rgb(34 197 255 / 0.05);
+  }
+
+  /* ─── Risk Level Colors ────────────────────────────────────── */
+  .risk-safe { @apply text-emerald-400; }
+  .risk-low { @apply text-green-400; }
+  .risk-medium { @apply text-amber-400; }
+  .risk-high { @apply text-orange-500; }
+  .risk-critical { @apply text-red-500; }
+
+  .risk-bg-safe { @apply bg-emerald-500/10 border-emerald-500/30; }
+  .risk-bg-low { @apply bg-green-500/10 border-green-500/30; }
+  .risk-bg-medium { @apply bg-amber-500/10 border-amber-500/30; }
+  .risk-bg-high { @apply bg-orange-500/10 border-orange-500/30; }
+  .risk-bg-critical { @apply bg-red-500/10 border-red-500/30 animate-pulse; }
+
+  /* ─── Decision State Colors ────────────────────────────────── */
+  .decision-cruise { @apply text-cyan-400 bg-cyan-500/10 border-cyan-500/30; }
+  .decision-follow { @apply text-blue-400 bg-blue-500/10 border-blue-500/30; }
+  .decision-slow_down { @apply text-amber-400 bg-amber-500/10 border-amber-500/30; }
+  .decision-stop { @apply text-red-400 bg-red-500/10 border-red-500/30; }
+  .decision-overtake { @apply text-purple-400 bg-purple-500/10 border-purple-500/30; }
+  .decision-yield { @apply text-orange-400 bg-orange-500/10 border-orange-500/30; }
+  .decision-replan { @apply text-yellow-400 bg-yellow-500/10 border-yellow-500/30; }
+  .decision-emergency_brake { @apply text-red-400 bg-red-500/20 border-red-500/50 animate-pulse; }
+
+  /* ─── Mono Data Display ────────────────────────────────────── */
+  .rs-data {
+    @apply font-mono text-cyan-400 tabular-nums;
+  }
+  .rs-label {
+    @apply text-xs font-medium text-slate-400 uppercase tracking-wider;
+  }
+
+  /* ─── Animated Scan Line ───────────────────────────────────── */
+  .scan-line {
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      hsl(199 89% 48% / 0.15) 50%,
+      transparent 100%
+    );
+    animation: scan 3s linear infinite;
+  }
+
+  /* ─── Simulation Canvas Container ─────────────────────────── */
+  .sim-viewport {
+    @apply relative rounded-xl overflow-hidden border border-slate-700/50;
+    background: #0a0f1a;
+  }
+
+  /* ─── Gradient Borders ─────────────────────────────────────── */
+  .gradient-border {
+    background: linear-gradient(hsl(222.2 84% 4.9%), hsl(222.2 84% 4.9%)) padding-box,
+                linear-gradient(135deg, hsl(199 89% 48%), hsl(262 83% 58%)) border-box;
+    border: 1px solid transparent;
+  }
+
+  /* ─── HUD Overlay ──────────────────────────────────────────── */
+  .hud-overlay {
+    @apply absolute top-0 left-0 right-0 bottom-0 pointer-events-none;
+    background: 
+      radial-gradient(ellipse at 50% 0%, hsl(199 89% 48% / 0.03) 0%, transparent 70%),
+      linear-gradient(180deg, hsl(220 13% 9% / 0.4) 0%, transparent 15%, transparent 85%, hsl(220 13% 9% / 0.4) 100%);
+  }
+
+  /* ─── Navigation Active State ──────────────────────────────── */
+  .nav-item-active {
+    @apply bg-cyan-500/10 text-cyan-400 border-r-2 border-cyan-500;
+  }
+  .nav-item {
+    @apply text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-colors;
+  }
+}
+
+@layer utilities {
+  /* ─── Glow Effects ─────────────────────────────────────────── */
+  .glow-cyan {
+    text-shadow: 0 0 20px hsl(199 89% 48% / 0.8);
+  }
+  .glow-sm {
+    box-shadow: 0 0 15px hsl(199 89% 48% / 0.3);
+  }
+  .glow-md {
+    box-shadow: 0 0 30px hsl(199 89% 48% / 0.4);
+  }
+
+  /* ─── Animations ───────────────────────────────────────────── */
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  .animate-grid-flow {
+    animation: grid-flow 20s linear infinite;
+  }
+
+  /* ─── Text Utilities ───────────────────────────────────────── */
+  .text-gradient {
+    @apply bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent;
+  }
+  .text-gradient-warm {
+    @apply bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent;
+  }
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────── */
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes grid-flow {
+  0% { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
+}
+
+/* ─── Simulation Road Grid ───────────────────────────────────── */
+.road-grid {
+  background-image: 
+    linear-gradient(hsl(220 13% 18% / 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(220 13% 18% / 0.3) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ─── Landing Page Animated Background ──────────────────────── */
+.hero-grid {
+  background-image: 
+    linear-gradient(hsl(199 89% 48% / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(199 89% 48% / 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: grid-flow 20s linear infinite;
+}
+
+/* ─── Focus Styles (a11y) ────────────────────────────────────── */
+:focus-visible {
+  outline-width: 2px;
+  outline-offset: 2px;
+  outline-color: #06b6d4;
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse,
+  .animate-pulse-slow,
+  .animate-float,
+  .animate-grid-flow,
+  .scan-line {
+    animation: none !important;
+  }
+}
