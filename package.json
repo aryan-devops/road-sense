@@ -37,7 +37,6 @@
     "framer-motion": "^13.2.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
-    "lightningcss-darwin-arm64": "^1.33.0",
     "lucide-react": "^1.43.0",
     "next": "16.3.4",
     "react": "19.2.8",
