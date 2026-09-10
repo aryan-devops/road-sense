@@ -248,14 +248,14 @@ function SimulationContent() {
   const risk = simState?.risk;
 
   return (
-    <div className="h-full flex flex-col bg-[#060b15]">
+    <div className="h-full flex flex-col bg-background">
       {/* ── Top Bar ─────────────────────────────────────── */}
-      <div className="h-12 border-b border-slate-800/60 flex items-center px-4 gap-3 bg-slate-900/40 shrink-0">
+      <div className="h-12 border-b border-border/60 flex items-center px-4 gap-3 bg-card/40 shrink-0">
         <Select value={selectedScenario.id} onValueChange={(id) => { if (id) handleScenarioChange(id); }}>
-          <SelectTrigger className="w-56 h-8 bg-slate-800/60 border-slate-700 text-sm text-white">
+          <SelectTrigger className="w-56 h-8 bg-card/60 border-border text-sm text-foreground">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className="bg-slate-900 border-slate-700">
+          <SelectContent className="bg-card border-border">
             {ALL_SCENARIOS.map(s => (
               <SelectItem key={s.id} value={s.id} className="text-slate-300 hover:text-white">
                 {s.name}
@@ -300,9 +300,9 @@ function SimulationContent() {
       <div className="flex-1 flex overflow-hidden">
 
         {/* ── LEFT: Controls Panel ─────────────────────── */}
-        <div className="w-64 shrink-0 border-r border-slate-800/60 flex flex-col bg-slate-900/30 overflow-y-auto">
+        <div className="w-64 shrink-0 border-r border-border/60 flex flex-col bg-card/30 overflow-y-auto">
           {/* Simulation Controls */}
-          <div className="p-4 border-b border-slate-800/60">
+          <div className="p-4 border-b border-border/60">
             <div className="rs-label mb-3">Simulation Controls</div>
             <div className="grid grid-cols-2 gap-2 mb-4">
               {status === 'idle' || status === 'completed' ? (
@@ -341,8 +341,8 @@ function SimulationContent() {
                   <button key={s} onClick={() => handleSpeedChange(s)}
                     className={`flex-1 py-1 text-xs rounded font-mono transition-all ${
                       simSpeed === s
-                        ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
-                        : 'bg-slate-800/50 text-slate-500 border border-slate-700/50 hover:border-slate-600'
+                        ? 'bg-primary/20 text-primary border border-primary/40'
+                        : 'bg-card/50 text-slate-500 border border-border/50 hover:border-slate-600'
                     }`}>
                     {s}×
                   </button>
@@ -352,7 +352,7 @@ function SimulationContent() {
           </div>
 
           {/* Configuration */}
-          <div className="p-4 border-b border-slate-800/60">
+          <div className="p-4 border-b border-border/60">
             <button
               onClick={() => setShowControls(!showControls)}
               className="flex items-center gap-2 w-full rs-label mb-3"
@@ -389,13 +389,13 @@ function SimulationContent() {
           </div>
 
           {/* 3D Engine Controls */}
-          <div className="p-4 border-b border-slate-800/60">
+          <div className="p-4 border-b border-border/60">
             <div className="rs-label mb-3">Camera Mode</div>
             <Select value={cameraMode} onValueChange={(m) => setCameraMode(m as CameraMode)}>
-              <SelectTrigger className="w-full h-8 bg-slate-800/60 border-slate-700 text-xs mb-4 text-slate-300">
+              <SelectTrigger className="w-full h-8 bg-card/60 border-border text-xs mb-4 text-foreground">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-slate-900 border-slate-700 text-xs">
+              <SelectContent className="bg-card border-border text-xs">
                 <SelectItem value="driver">Driver (FPV)</SelectItem>
                 <SelectItem value="follow">Chase Camera</SelectItem>
                 <SelectItem value="birds_eye">Bird&apos;s Eye</SelectItem>
@@ -419,7 +419,7 @@ function SimulationContent() {
                 <Label htmlFor="cam-toggle" className="text-xs text-slate-400">Camera FOV</Label>
                 <Switch id="cam-toggle" checked={showCameraView} onCheckedChange={setShowCameraView} className="scale-75" />
               </div>
-              <div className="flex items-center justify-between pt-3 mt-1 border-t border-slate-800/60">
+              <div className="flex items-center justify-between pt-3 mt-1 border-t border-border/60">
                 <Label htmlFor="perf-toggle" className="text-xs text-slate-400">Performance Mode</Label>
                 <Switch id="perf-toggle" checked={perfMode} onCheckedChange={setPerfMode} className="scale-75" />
               </div>
@@ -434,7 +434,7 @@ function SimulationContent() {
                 <button key={evt.type}
                   onClick={() => handleInjectEvent(evt.type)}
                   disabled={status !== 'running'}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg bg-slate-800/40 border border-slate-700/40 text-slate-400 hover:text-white hover:border-slate-600 hover:bg-slate-800/70 transition-all text-xs text-left disabled:opacity-40 disabled:cursor-not-allowed">
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg bg-card/40 border border-border/40 text-slate-400 hover:text-foreground hover:border-slate-600 hover:bg-card/70 transition-all text-xs text-left disabled:opacity-40 disabled:cursor-not-allowed">
                   <span className="text-base">{evt.icon}</span>
                   {evt.label}
                 </button>
@@ -453,10 +453,10 @@ function SimulationContent() {
 
             {/* Idle overlay */}
             {status === 'idle' && (
-              <div className="absolute inset-0 flex items-center justify-center bg-slate-900/70 backdrop-blur-sm">
+              <div className="absolute inset-0 flex items-center justify-center bg-card/70 backdrop-blur-sm">
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
                   <div className="text-6xl mb-4">🛣️</div>
-                  <h3 className="text-xl font-bold text-white mb-2">Ready to Simulate</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-2">Ready to Simulate</h3>
                   <p className="text-slate-400 text-sm mb-6">Select a scenario and press Start</p>
                   <Button onClick={handleStart} className="bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold gap-2">
                     <Play className="w-4 h-4" /> Start Simulation
@@ -467,13 +467,13 @@ function SimulationContent() {
 
             {/* Completed overlay */}
             {status === 'completed' && metrics && (
-              <div className="absolute inset-0 flex items-center justify-center bg-slate-900/80 backdrop-blur-sm">
+              <div className="absolute inset-0 flex items-center justify-center bg-card/80 backdrop-blur-sm">
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="rs-panel p-8 text-center max-w-sm">
                   <div className="text-5xl mb-4">🏁</div>
-                  <h3 className="text-xl font-bold mb-1">Simulation Complete</h3>
+                  <h3 className="text-xl font-bold mb-1 text-foreground">Simulation Complete</h3>
                   <p className="text-slate-400 text-sm mb-5">{selectedScenario.name}</p>
                   <div className="grid grid-cols-2 gap-3 mb-6">
-                    <div className="bg-slate-800/50 rounded-lg p-3">
+                    <div className="bg-background/50 rounded-lg p-3">
                       <div className="text-2xl font-black text-cyan-400">{metrics.safetyScore}</div>
                       <div className="text-xs text-slate-500">Safety Score</div>
                     </div>
@@ -504,10 +504,10 @@ function SimulationContent() {
                   initial={{ x: '100%' }}
                   animate={{ x: 0 }}
                   exit={{ x: '100%' }}
-                  className="absolute right-0 top-0 bottom-0 w-72 bg-slate-900/95 border-l border-slate-700/50 p-4 overflow-y-auto backdrop-blur-sm"
+                  className="absolute right-0 top-0 bottom-0 w-72 bg-card/95 border-l border-border/50 p-4 overflow-y-auto backdrop-blur-sm"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="font-semibold text-sm text-white">How It Works</div>
+                    <div className="font-semibold text-sm text-foreground">How It Works</div>
                     <button onClick={() => setShowExplain(false)} className="text-slate-500 hover:text-white">
                       <X className="w-4 h-4" />
                     </button>
@@ -516,18 +516,18 @@ function SimulationContent() {
                   <ExplainSection title="WHAT THE VEHICLE SEES" icon={<Eye className="w-3 h-3" />}>
                     <p className="text-slate-400 text-xs mb-2">{simState.detectedObjects.length} objects detected</p>
                     {simState.detectedObjects.slice(0, 4).map((obj, i) => (
-                      <div key={obj.agentId ?? `${obj.type}-${obj.worldPosition.x.toFixed(2)}-${obj.worldPosition.y.toFixed(2)}-${i}`} className="flex items-center justify-between text-xs py-1 border-b border-slate-800/60 last:border-0">
-                        <span className="text-slate-300 capitalize">{obj.type.replace('_', ' ')}</span>
-                        <span className="text-cyan-400 font-mono">{(obj.confidence * 100).toFixed(0)}% @ {obj.distance.toFixed(0)}m</span>
+                      <div key={obj.agentId ?? `${obj.type}-${obj.worldPosition.x.toFixed(2)}-${obj.worldPosition.y.toFixed(2)}-${i}`} className="flex items-center justify-between text-xs py-1 border-b border-border/60 last:border-0">
+                        <span className="text-slate-500 capitalize">{obj.type.replace('_', ' ')}</span>
+                        <span className="text-cyan-600 font-mono">{(obj.confidence * 100).toFixed(0)}% @ {obj.distance.toFixed(0)}m</span>
                       </div>
                     ))}
                   </ExplainSection>
 
                   <ExplainSection title="WHAT IT PREDICTS" icon={<TrendingUp className="w-3 h-3" />}>
                     {simState.trackedObjects.slice(0, 3).map(t => (
-                      <div key={t.id} className="text-xs py-1 border-b border-slate-800/60 last:border-0">
+                      <div key={t.id} className="text-xs py-1 border-b border-border/60 last:border-0">
                         <div className="flex justify-between">
-                          <span className="text-slate-300 capitalize">{t.type.replace('_', ' ')}</span>
+                          <span className="text-slate-500 capitalize">{t.type.replace('_', ' ')}</span>
                           <span className={RISK_COLORS[t.threatLevel] ?? 'text-slate-400'}>{t.threatLevel}</span>
                         </div>
                         <div className="text-slate-500 mt-0.5">
@@ -555,9 +555,9 @@ function SimulationContent() {
                         <CostRow label="Clearance Cost" value={simState.plannedPath.clearanceCost.toFixed(1)} />
                         <CostRow label="Curvature Cost" value={simState.plannedPath.curvatureCost.toFixed(1)} />
                         <CostRow label="Smoothness Cost" value={simState.plannedPath.smoothnessCost.toFixed(1)} />
-                        <div className="border-t border-slate-700/60 pt-1 mt-1 flex justify-between font-semibold">
-                          <span className="text-slate-300">Total Cost</span>
-                          <span className="text-cyan-400 font-mono">{simState.plannedPath.totalCost.toFixed(1)}</span>
+                        <div className="border-t border-border/60 pt-1 mt-1 flex justify-between font-semibold">
+                          <span className="text-slate-500">Total Cost</span>
+                          <span className="text-cyan-600 font-mono">{simState.plannedPath.totalCost.toFixed(1)}</span>
                         </div>
                         <p className="text-slate-500 pt-1">From {simState.plannedPath.candidateCount} candidates</p>
                       </div>
@@ -569,9 +569,9 @@ function SimulationContent() {
           </div>
 
           {/* Event Timeline */}
-          <div className="h-28 border-t border-slate-800/60 bg-slate-900/30 overflow-hidden flex flex-col">
+          <div className="h-28 border-t border-border/60 bg-card/30 overflow-hidden flex flex-col">
             <div className="px-4 py-2 flex items-center gap-2">
-              <Activity className="w-3 h-3 text-cyan-400" />
+              <Activity className="w-3 h-3 text-cyan-600" />
               <span className="rs-label">Event Timeline</span>
               <span className="text-xs text-slate-600 font-mono">{events.length} events</span>
             </div>
@@ -586,9 +586,9 @@ function SimulationContent() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className={`shrink-0 px-3 py-1.5 rounded-lg border text-xs max-w-48 ${
-                        evt.severity === 'critical' ? 'bg-red-500/10 border-red-500/30 text-red-300' :
-                        evt.severity === 'warning' ? 'bg-amber-500/10 border-amber-500/30 text-amber-300' :
-                        'bg-slate-800/50 border-slate-700/40 text-slate-400'
+                        evt.severity === 'critical' ? 'bg-red-500/10 border-red-500/30 text-red-600' :
+                        evt.severity === 'warning' ? 'bg-amber-500/10 border-amber-500/30 text-amber-600' :
+                        'bg-card/50 border-border/40 text-slate-500'
                       }`}
                     >
                       <div className="font-mono text-[10px] opacity-60 mb-0.5">T+{evt.timestamp.toFixed(2)}s</div>
@@ -602,9 +602,9 @@ function SimulationContent() {
         </div>
 
         {/* ── RIGHT: Telemetry Panel ───────────────────── */}
-        <div className="w-64 shrink-0 border-l border-slate-800/60 flex flex-col bg-slate-900/30 overflow-y-auto">
+        <div className="w-64 shrink-0 border-l border-border/60 flex flex-col bg-card/30 overflow-y-auto">
           {/* Vehicle Telemetry */}
-          <div className="p-4 border-b border-slate-800/60">
+          <div className="p-4 border-b border-border/60">
             <div className="rs-label mb-3 flex items-center gap-1.5">
               <Crosshair className="w-3 h-3" /> Vehicle Telemetry
             </div>
@@ -618,7 +618,7 @@ function SimulationContent() {
           </div>
 
           {/* Decision */}
-          <div className="p-4 border-b border-slate-800/60">
+          <div className="p-4 border-b border-border/60">
             <div className="rs-label mb-3 flex items-center gap-1.5">
               <Brain className="w-3 h-3" /> Decision Engine
             </div>
@@ -629,7 +629,7 @@ function SimulationContent() {
           </div>
 
           {/* Risk Assessment */}
-          <div className="p-4 border-b border-slate-800/60">
+          <div className="p-4 border-b border-border/60">
             <div className="rs-label mb-3 flex items-center gap-1.5">
               <Shield className="w-3 h-3" /> Risk Assessment
             </div>
@@ -644,7 +644,7 @@ function SimulationContent() {
           </div>
 
           {/* Perception */}
-          <div className="p-4 border-b border-slate-800/60">
+          <div className="p-4 border-b border-border/60">
             <div className="rs-label mb-3 flex items-center gap-1.5">
               <Radio className="w-3 h-3" /> Perception
             </div>
@@ -704,14 +704,16 @@ function TelemetryRow({ label, value, highlight }: { label: string; value: strin
 function ConfigSlider({
   label, value, min, max, step, unit, onChange, disabled
 }: { label: string; value: number; min: number; max: number; step: number; unit: string; onChange: (v: number) => void; disabled?: boolean }) {
+  const safeValue = typeof value !== 'number' || isNaN(value) ? min : value;
+  
   return (
     <div>
       <div className="flex justify-between items-center mb-1">
         <span className="text-xs text-slate-400">{label}</span>
-        <span className="text-xs font-mono text-cyan-400">{value}{unit}</span>
+        <span className="text-xs font-mono text-cyan-400">{safeValue}{unit}</span>
       </div>
       <Slider
-        value={[value]} min={min} max={max} step={step}
+        value={[safeValue]} min={min} max={max} step={step}
         onValueChange={(vals) => onChange((vals as number[])[0]!)}
         disabled={disabled}
         className="h-1"
@@ -722,8 +724,8 @@ function ConfigSlider({
 
 function ExplainSection({ title, icon, children }: { title: string; icon: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div className="mb-4 pb-4 border-b border-slate-800/60 last:border-0">
-      <div className="flex items-center gap-1.5 rs-label mb-2">
+    <div className="mb-4 pb-4 border-b border-border/60 last:border-0">
+      <div className="flex items-center gap-1.5 rs-label mb-2 text-slate-500">
         {icon} {title}
       </div>
       {children}

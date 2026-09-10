@@ -63,10 +63,10 @@ function loadAndNormalizeGLB(
 
 // Highly Realistic Procedural Material Cache
 const MATERIALS = {
-  carPaintWhite: new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.3, roughness: 0.1 }),
-  carPaintSilver: new THREE.MeshStandardMaterial({ color: 0x9ca3af, metalness: 0.8, roughness: 0.2 }),
-  carPaintBlack: new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.6, roughness: 0.2 }),
-  carGlass: new THREE.MeshPhysicalMaterial({ color: 0x050505, metalness: 0.9, roughness: 0.1, envMapIntensity: 1.0, transparent: true, opacity: 0.85 }),
+  carPaintWhite: new THREE.MeshStandardMaterial({ color: 0xa0a5ab, metalness: 0.85, roughness: 0.15 }), // Gunmetal silver
+  carPaintSilver: new THREE.MeshStandardMaterial({ color: 0x8b939c, metalness: 0.8, roughness: 0.2 }),
+  carPaintBlack: new THREE.MeshStandardMaterial({ color: 0x1a1c20, metalness: 0.7, roughness: 0.2 }),
+  carGlass: new THREE.MeshPhysicalMaterial({ color: 0x050505, metalness: 0.9, roughness: 0.05, envMapIntensity: 1.5, transparent: true, opacity: 0.9 }),
   carPlastic: new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.1, roughness: 0.8 }),
   wheelRubber: new THREE.MeshStandardMaterial({ color: 0x0f0f0f, roughness: 0.9 }),
   wheelRim: new THREE.MeshStandardMaterial({ color: 0xe5e7eb, metalness: 0.9, roughness: 0.2 }),
@@ -82,8 +82,8 @@ const MATERIALS = {
 
   motorcycleBody: new THREE.MeshStandardMaterial({ color: 0x2563eb, metalness: 0.6, roughness: 0.2 }),
 
-  cattleBodyWhite: new THREE.MeshStandardMaterial({ color: 0xebebe4, roughness: 1.0 }),
-  cattleBodyBrown: new THREE.MeshStandardMaterial({ color: 0x5c4033, roughness: 1.0 }),
+  cattleBodyWhite: new THREE.MeshStandardMaterial({ color: 0xdcd8c0, roughness: 0.9 }),
+  cattleBodyBrown: new THREE.MeshStandardMaterial({ color: 0x4a3626, roughness: 0.9 }),
   cattleDetails: new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.9 }), // hooves/nose
   cattleHorns: new THREE.MeshStandardMaterial({ color: 0xd4c4a8, roughness: 0.6 }),
 
@@ -98,8 +98,8 @@ const MATERIALS = {
   truckCab: new THREE.MeshStandardMaterial({ color: 0xb91c1c, metalness: 0.4, roughness: 0.4 }),
   truckTrailer: new THREE.MeshStandardMaterial({ color: 0x9ca3af, metalness: 0.7, roughness: 0.5 }),
 
-  barrierYellow: new THREE.MeshStandardMaterial({ color: 0xfacc15, roughness: 0.6 }),
-  barrierBlack: new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.8 }),
+  barrierYellow: new THREE.MeshStandardMaterial({ color: 0xd9a036, roughness: 0.7 }),
+  barrierBlack: new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.85 }),
 };
 
 export function createEgoVehicleModel(): { group: THREE.Group; lidarDome: THREE.Mesh; taillightMesh: THREE.Mesh; wheels: THREE.Mesh[] } {

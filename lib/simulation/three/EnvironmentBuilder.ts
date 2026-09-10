@@ -20,8 +20,8 @@ export class EnvironmentBuilder {
   constructor(scene: THREE.Scene) {
     this.scene = scene;
 
-    this.ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-    this.directionalLight = new THREE.DirectionalLight(0xfff5e6, 1.8);
+    this.ambientLight = new THREE.AmbientLight(0xe0e5ec, 0.5);
+    this.directionalLight = new THREE.DirectionalLight(0xfff0dd, 1.6);
     this.directionalLight.position.set(100, 150, 50);
     this.directionalLight.castShadow = true;
     this.directionalLight.shadow.mapSize.width = 4096;
@@ -36,7 +36,7 @@ export class EnvironmentBuilder {
     this.directionalLight.shadow.camera.bottom = -d;
 
     // Realistic sky illumination
-    this.hemisphereLight = new THREE.HemisphereLight(0x87ceeb, 0x5b4d3c, 0.6);
+    this.hemisphereLight = new THREE.HemisphereLight(0x8ba6c1, 0x5b5346, 0.5);
 
     this.scene.add(this.ambientLight, this.directionalLight, this.hemisphereLight);
     this.scene.add(this.roadsideObjectsGroup);
@@ -71,7 +71,7 @@ export class EnvironmentBuilder {
     terrainGeom.computeVertexNormals();
 
     const terrainMat = new THREE.MeshStandardMaterial({
-      color: 0x827354, // Dry earth / dusty grass color
+      color: 0x5b5346, // Dusty beige-gray / natural soil
       roughness: 1.0,
       metalness: 0.0,
     });
@@ -95,14 +95,14 @@ export class EnvironmentBuilder {
     roadGeom.computeVertexNormals();
 
     const roadMat = new THREE.MeshStandardMaterial({
-      color: 0x565b60, // Weathered asphalt base
-      roughness: 0.9,
-      metalness: 0.1,
+      color: 0x222428, // Dark warm asphalt / graphite-gray
+      roughness: 0.95,
+      metalness: 0.05,
       map: this.createAsphaltTexture(),
     });
     // Add detail normal map approximation
     roadMat.bumpMap = roadMat.map;
-    roadMat.bumpScale = 0.02;
+    roadMat.bumpScale = 0.05;
     
     this.roadMesh = new THREE.Mesh(roadGeom, roadMat);
     this.roadMesh.position.set(500, 0.01, 300);
@@ -110,8 +110,8 @@ export class EnvironmentBuilder {
     this.scene.add(this.roadMesh);
 
     // 3. Realistic Lane markings
-    const fadedWhiteMat = new THREE.MeshStandardMaterial({ color: 0xdcdcdc, roughness: 0.9 });
-    const fadedYellowMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, roughness: 0.9 });
+    const fadedWhiteMat = new THREE.MeshStandardMaterial({ color: 0xb5b2ab, roughness: 0.95 });
+    const fadedYellowMat = new THREE.MeshStandardMaterial({ color: 0x9c8542, roughness: 0.95 });
     
     // Edges (Solid white/yellow, slightly broken)
     const edgeThickness = 0.25;
@@ -151,7 +151,7 @@ export class EnvironmentBuilder {
 
     // Concrete Shoulders/Dirt Edges
     const curbGeom = new THREE.BoxGeometry(roadLength, 0.2, 3);
-    const curbMat = new THREE.MeshStandardMaterial({ color: 0x8a7f72, roughness: 1.0 }); // Dusty dirt shoulder
+    const curbMat = new THREE.MeshStandardMaterial({ color: 0x6e6558, roughness: 1.0 }); // Dusty beige-gray
     const topCurb = new THREE.Mesh(curbGeom, curbMat);
     topCurb.position.set(500, 0.0, 300 - roadWidth / 2 - 1.5);
     topCurb.receiveShadow = true;
@@ -384,15 +384,15 @@ export class EnvironmentBuilder {
 
     switch (weather) {
       case 'clear':
-        // Bright Indian Daylight
-        this.scene.background = new THREE.Color(0x87ceeb);
-        this.scene.fog = new THREE.FogExp2(0x87ceeb, 0.0015);
-        this.ambientLight.intensity = 0.7;
-        this.ambientLight.color.setHex(0xffffff);
-        this.directionalLight.intensity = 2.0;
-        this.directionalLight.color.setHex(0xfff5e6); // Warm sunlight
-        this.hemisphereLight.color.setHex(0x87ceeb);
-        this.hemisphereLight.groundColor.setHex(0x827354);
+        // Cinematic Automotive Setup
+        this.scene.background = new THREE.Color(0xa3b5c6);
+        this.scene.fog = new THREE.FogExp2(0xa3b5c6, 0.002);
+        this.ambientLight.intensity = 0.5;
+        this.ambientLight.color.setHex(0xe0e5ec);
+        this.directionalLight.intensity = 1.6;
+        this.directionalLight.color.setHex(0xfff0dd); // Warm sunlight, but softer
+        this.hemisphereLight.color.setHex(0x8ba6c1);
+        this.hemisphereLight.groundColor.setHex(0x5b5346);
         break;
 
       case 'night':
@@ -475,16 +475,23 @@ export class EnvironmentBuilder {
     canvas.height = 512;
     const ctx = canvas.getContext('2d');
     if (ctx) {
-      ctx.fillStyle = '#4a4f54';
+      ctx.fillStyle = '#222428';
       ctx.fillRect(0, 0, 512, 512);
       // Generate noise
-      for (let i = 0; i < 40000; i++) {
+      for (let i = 0; i < 60000; i++) {
         const x = Math.random() * 512;
         const y = Math.random() * 512;
-        const v = Math.random() > 0.5 ? 255 : 0;
-        const a = Math.random() * 0.05; // very subtle noise
+        const v = Math.random() > 0.5 ? 255 : 10;
+        const a = Math.random() * 0.08; // very subtle noise
         ctx.fillStyle = `rgba(${v},${v},${v},${a})`;
-        ctx.fillRect(x, y, 2, 2);
+        ctx.fillRect(x, y, Math.random() * 3, Math.random() * 3);
+      }
+      // Add subtle tonal patches
+      for (let i = 0; i < 20; i++) {
+        ctx.beginPath();
+        ctx.arc(Math.random() * 512, Math.random() * 512, Math.random() * 40 + 10, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(20, 22, 24, 0.04)`;
+        ctx.fill();
       }
     }
     const tex = new THREE.CanvasTexture(canvas);

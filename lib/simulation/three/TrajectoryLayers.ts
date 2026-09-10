@@ -18,7 +18,7 @@ export class TrajectoryLayers {
     const drivableGeom = new THREE.PlaneGeometry(60, 10, 1, 1);
     drivableGeom.rotateX(-Math.PI / 2);
     const drivableMat = new THREE.MeshBasicMaterial({
-      color: 0x06b6d4, // Cyan corridor
+      color: 0x7a8a9a, // Muted slate gray
       transparent: true,
       opacity: 0.12,
       side: THREE.DoubleSide,
@@ -30,7 +30,7 @@ export class TrajectoryLayers {
     // 2. Main Planned Path Line
     const pathGeom = new THREE.BufferGeometry();
     const pathMat = new THREE.LineBasicMaterial({
-      color: 0x22d3ee,
+      color: 0x8fb397, // Subtle safe green
       linewidth: 3,
     });
     this.plannedPathLine = new THREE.Line(pathGeom, pathMat);
@@ -40,7 +40,7 @@ export class TrajectoryLayers {
     const shockGeom = new THREE.RingGeometry(0.2, 1.0, 32);
     shockGeom.rotateX(-Math.PI / 2);
     const shockMat = new THREE.MeshBasicMaterial({
-      color: 0xf59e0b,
+      color: 0xd98d26, // Muted amber
       transparent: true,
       opacity: 0.0,
       side: THREE.DoubleSide,
@@ -82,7 +82,7 @@ export class TrajectoryLayers {
       ];
       this.plannedPathLine.geometry.setFromPoints(points);
 
-      const pathColor = plannedPath.isReplanned ? 0xf59e0b : 0x22d3ee;
+      const pathColor = plannedPath.isReplanned ? 0xd98d26 : 0x8fb397;
       (this.plannedPathLine.material as THREE.LineBasicMaterial).color.setHex(pathColor);
 
       if (plannedPath.isReplanned && this.replanShockwaveTime < 0) {
@@ -150,7 +150,7 @@ export class TrajectoryLayers {
       const points = pred.points.map(p => new THREE.Vector3(p.x, 0.15, p.y));
       const lineGeom = new THREE.BufferGeometry().setFromPoints(points);
       const lineMat = new THREE.LineDashedMaterial({
-        color: 0xc084fc, // Violet prediction line
+        color: 0xc9a063, // Muted amber prediction
         dashSize: 1.0,
         gapSize: 0.8,
         transparent: true,
@@ -165,7 +165,7 @@ export class TrajectoryLayers {
       const coneGeom = new THREE.CircleGeometry(1.2 + pred.uncertainty * 2.0, 16);
       coneGeom.rotateX(-Math.PI / 2);
       const coneMat = new THREE.MeshBasicMaterial({
-        color: 0xa855f7,
+        color: 0xb58c4e,
         transparent: true,
         opacity: 0.18,
       });
@@ -182,11 +182,11 @@ export class TrajectoryLayers {
       ringGeom.rotateX(-Math.PI / 2);
 
       const riskColorMap = {
-        SAFE: 0x10b981,
-        LOW: 0x84cc16,
-        MEDIUM: 0xfbbf24,
-        HIGH: 0xf97316,
-        CRITICAL: 0xef4444,
+        SAFE: 0x7da885,
+        LOW: 0x9db574,
+        MEDIUM: 0xcca654,
+        HIGH: 0xc9753c,
+        CRITICAL: 0xc94c4c,
       };
 
       const color = riskColorMap[zone.risk] ?? 0x10b981;

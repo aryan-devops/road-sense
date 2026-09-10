@@ -28,7 +28,7 @@ export class SensoryLayers {
       size: 0.22,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.35,
       blending: THREE.AdditiveBlending,
     });
     this.lidarPoints = new THREE.Points(lidarGeom, lidarMat);
@@ -37,11 +37,10 @@ export class SensoryLayers {
     // 2. Radar Fan Sweep
     const radarGeom = new THREE.RingGeometry(0.5, 45, 32, 1, -Math.PI / 6, Math.PI / 3);
     radarGeom.rotateX(-Math.PI / 2);
-    radarGeom.rotateY(Math.PI / 2);
     const radarMat = new THREE.MeshBasicMaterial({
-      color: 0xa855f7, // Violet radar frequency
+      color: 0xc9a063, // Muted amber
       transparent: true,
-      opacity: 0.12,
+      opacity: 0.08,
       side: THREE.DoubleSide,
       blending: THREE.AdditiveBlending,
     });
@@ -52,11 +51,12 @@ export class SensoryLayers {
     // 3. Camera Frustum Wireframe
     const camGeom = new THREE.ConeGeometry(30, 50, 4, 1, true);
     camGeom.rotateX(Math.PI / 2);
+    camGeom.rotateY(Math.PI / 2);
     const wireGeom = new THREE.WireframeGeometry(camGeom);
     const camMat = new THREE.LineBasicMaterial({
-      color: 0x06b6d4, // Cyan camera cone
+      color: 0x8ba6c1, // Muted slate gray
       transparent: true,
-      opacity: 0.18,
+      opacity: 0.1,
     });
     this.cameraFrustum = new THREE.LineSegments(wireGeom, camMat);
     this.scene.add(this.cameraFrustum);
@@ -123,11 +123,11 @@ export class SensoryLayers {
           this.lidarPositions[pIdx * 3 + 1] = py;
           this.lidarPositions[pIdx * 3 + 2] = pz;
 
-          // Color by range: cyan (near) to violet (far)
+          // Muted earthy gradient for LiDAR points
           const normDist = radius / 55;
-          this.lidarColors[pIdx * 3] = 0.1 + normDist * 0.7;     // R
-          this.lidarColors[pIdx * 3 + 1] = 0.9 - normDist * 0.6; // G
-          this.lidarColors[pIdx * 3 + 2] = 1.0;                 // B
+          this.lidarColors[pIdx * 3] = 0.5 + normDist * 0.3;     // R
+          this.lidarColors[pIdx * 3 + 1] = 0.6 - normDist * 0.2; // G
+          this.lidarColors[pIdx * 3 + 2] = 0.7;                  // B
 
           pIdx++;
         }
@@ -144,9 +144,9 @@ export class SensoryLayers {
           this.lidarPositions[pIdx * 3 + 1] = spreadY;
           this.lidarPositions[pIdx * 3 + 2] = obj.worldPosition.y + spreadZ;
 
-          // Intense green/cyan hit-points
-          this.lidarColors[pIdx * 3] = 0.2;
-          this.lidarColors[pIdx * 3 + 1] = 1.0;
+          // Muted amber hit-points
+          this.lidarColors[pIdx * 3] = 0.8;
+          this.lidarColors[pIdx * 3 + 1] = 0.6;
           this.lidarColors[pIdx * 3 + 2] = 0.4;
 
           pIdx++;

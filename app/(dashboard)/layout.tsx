@@ -100,7 +100,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className="px-4 py-5 border-b border-slate-800/60">
+      <div className="px-4 py-5 border-b border-border/60">
         <Link href="/dashboard" className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center">
             <Navigation className="w-4 h-4 text-cyan-400" />
@@ -146,7 +146,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </nav>
 
       {/* User info */}
-      <div className="px-4 py-4 border-t border-slate-800/60">
+      <div className="px-4 py-4 border-t border-border/60">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-xs font-bold text-cyan-400 uppercase">
             {user?.full_name?.[0] ?? user?.email?.[0] ?? 'U'}
@@ -164,9 +164,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   );
 
   return (
-    <div className="flex h-screen bg-[#060b15] text-white overflow-hidden">
+    <div className="flex h-screen bg-background text-foreground overflow-hidden">
       {/* ─── Desktop Sidebar ─────────────────────────── */}
-      <aside className="hidden lg:flex w-60 shrink-0 flex-col bg-slate-900/80 border-r border-slate-800/60">
+      <aside className="hidden lg:flex w-60 shrink-0 flex-col bg-card/80 border-r border-border/60 backdrop-blur-md">
         <SidebarContent />
       </aside>
 
@@ -186,7 +186,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               animate={{ x: 0 }}
               exit={{ x: -240 }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed left-0 top-0 bottom-0 w-60 bg-slate-900 border-r border-slate-800/60 z-50 lg:hidden"
+              className="fixed left-0 top-0 bottom-0 w-60 bg-card border-r border-border/60 z-50 lg:hidden"
             >
               <SidebarContent />
             </motion.aside>
@@ -197,7 +197,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* ─── Main Content ─────────────────────────────── */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Nav */}
-        <header className="h-14 border-b border-slate-800/60 bg-slate-900/60 backdrop-blur-sm flex items-center px-4 gap-4 shrink-0">
+        <header className="h-14 border-b border-border/60 bg-card/60 backdrop-blur-md flex items-center px-4 gap-4 shrink-0">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="lg:hidden text-slate-400 hover:text-white p-1"

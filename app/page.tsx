@@ -90,11 +90,11 @@ function AnimatedRoadBackground() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw road
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
+      ctx.fillStyle = 'rgba(242, 239, 231, 0.95)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Grid
-      ctx.strokeStyle = 'rgba(34, 197, 255, 0.04)';
+      ctx.strokeStyle = 'rgba(51, 104, 160, 0.15)';
       ctx.lineWidth = 1;
       const gridSize = 50;
       for (let x = 0; x < canvas.width; x += gridSize) {
@@ -109,14 +109,14 @@ function AnimatedRoadBackground() {
       const laneW = 80;
 
       // Road surface
-      ctx.fillStyle = 'rgba(30, 41, 59, 0.6)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
       ctx.fillRect(0, roadY - laneW, canvas.width, laneW * 2);
 
       // Dashed center line (fading out — no lane markings)
       const dashPhase = (frame * 0.5) % 40;
       ctx.setLineDash([20, 20]);
       ctx.lineDashOffset = dashPhase;
-      ctx.strokeStyle = 'rgba(251, 191, 36, 0.15)';
+      ctx.strokeStyle = 'rgba(217, 160, 54, 0.2)';
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(0, roadY);
@@ -131,7 +131,7 @@ function AnimatedRoadBackground() {
       // Sensor ring
       const ringPhase = (Math.sin(frame * 0.05) + 1) / 2;
       const gradient = ctx.createRadialGradient(egoX, egoY, 0, egoX, egoY, 80);
-      gradient.addColorStop(0, 'rgba(34, 197, 255, 0.1)');
+      gradient.addColorStop(0, 'rgba(208, 97, 72, 0.15)');
       gradient.addColorStop(1, 'transparent');
       ctx.fillStyle = gradient;
       ctx.beginPath();
@@ -139,16 +139,16 @@ function AnimatedRoadBackground() {
       ctx.fill();
 
       // Ego vehicle body
-      ctx.fillStyle = '#22d3ee';
-      ctx.shadowColor = '#22d3ee';
-      ctx.shadowBlur = 15;
+      ctx.fillStyle = '#3368A0';
+      ctx.shadowColor = '#3368A0';
+      ctx.shadowBlur = 10;
       ctx.beginPath();
       ctx.roundRect(egoX - 18, egoY - 8, 36, 16, 4);
       ctx.fill();
       ctx.shadowBlur = 0;
 
       // Path ahead
-      ctx.strokeStyle = 'rgba(34, 197, 255, 0.4)';
+      ctx.strokeStyle = 'rgba(81, 158, 114, 0.6)';
       ctx.lineWidth = 2;
       ctx.setLineDash([6, 4]);
       ctx.beginPath();
@@ -168,7 +168,7 @@ function AnimatedRoadBackground() {
           p.life = p.maxLife;
         }
         const alpha = (p.life / p.maxLife) * 0.6;
-        ctx.fillStyle = `rgba(34, 197, 255, ${alpha})`;
+        ctx.fillStyle = `rgba(208, 97, 72, ${alpha})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
         ctx.fill();
@@ -176,8 +176,8 @@ function AnimatedRoadBackground() {
 
       // Obstacle
       const obsX = ((frame * 0.6 + 300) % (canvas.width + 60)) - 30;
-      ctx.fillStyle = 'rgba(239, 68, 68, 0.7)';
-      ctx.shadowColor = '#ef4444';
+      ctx.fillStyle = 'rgba(226, 88, 77, 0.8)';
+      ctx.shadowColor = '#e2584d';
       ctx.shadowBlur = 8;
       ctx.beginPath();
       ctx.roundRect(obsX - 10, roadY - 6, 20, 12, 3);
@@ -230,9 +230,9 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#050a14] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* ─── Top Nav ─────────────────────────────────────── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-slate-800/60 bg-[#050a14]/80 backdrop-blur-xl">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center">
@@ -365,7 +365,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── Metrics Banner ──────────────────────────────── */}
-      <section className="py-8 border-y border-slate-800/50 bg-slate-900/30">
+      <section className="py-8 border-y border-border/50 bg-card/30">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {METRICS.map((m, i) => (
@@ -403,7 +403,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── Pipeline ────────────────────────────────────── */}
-      <section id="pipeline" className="py-24 bg-slate-900/20">
+      <section id="pipeline" className="py-24 bg-card/10">
         <div className="max-w-7xl mx-auto px-6">
           <FadeIn className="text-center mb-16">
             <Badge className="mb-4 bg-cyan-500/10 border-cyan-500/30 text-cyan-400">The Solution</Badge>
@@ -471,7 +471,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── Tech Stack ──────────────────────────────────── */}
-      <section className="py-24 bg-slate-900/20">
+      <section className="py-24 bg-card/10">
         <div className="max-w-7xl mx-auto px-6">
           <FadeIn className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Technology Stack</h2>
@@ -512,7 +512,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── Footer ──────────────────────────────────────── */}
-      <footer className="border-t border-slate-800/60 py-12">
+      <footer className="border-t border-border/60 py-12">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-3">

@@ -1,7 +1,78 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
-/* Tailwind v4: auto-scan source files for class names */
+/*
+  RoadSense — Clean, Light & Simple Theme
+*/
+
+@theme {
+  /* Standard Application Colors mapped for Tailwind utilities */
+  --color-primary: hsl(217 91% 60%);
+  --color-primary-foreground: hsl(0 0% 100%);
+  
+  --color-secondary: hsl(214 32% 91%);
+  --color-secondary-foreground: hsl(215 25% 27%);
+  
+  --color-destructive: hsl(0 84% 60%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+  
+  --color-muted: hsl(210 40% 96%);
+  --color-muted-foreground: hsl(215 16% 47%);
+  
+  --color-accent: hsl(210 40% 96%);
+  --color-accent-foreground: hsl(222 47% 11%);
+  
+  --color-background: hsl(210 40% 98%);
+  --color-foreground: hsl(222 47% 11%);
+  
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(222 47% 11%);
+  
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(222 47% 11%);
+  
+  --color-border: hsl(214 32% 91%);
+  --color-input: hsl(214 32% 91%);
+  
+  --color-ring: hsl(217 91% 60%);
+  
+  --radius: 0.5rem;
+
+  /* Basic shades used in @apply rules if not present by default */
+  --color-emerald-50: hsl(152 81% 96%);
+  --color-emerald-500: hsl(152 69% 31%);
+  --color-emerald-600: hsl(158 64% 27%);
+
+  --color-blue-50: hsl(214 100% 97%);
+  --color-blue-500: hsl(217 91% 60%);
+  --color-blue-600: hsl(221 83% 53%);
+
+  --color-amber-50: hsl(48 100% 96%);
+  --color-amber-500: hsl(38 92% 50%);
+  --color-amber-600: hsl(35 92% 40%);
+
+  --color-red-50: hsl(0 86% 97%);
+  --color-red-500: hsl(0 84% 60%);
+  --color-red-600: hsl(0 72% 51%);
+
+  /* Inverted Light Theme Mapping for Dark-mode React components */
+  --color-white: hsl(220 15% 15%); /* Maps text-white to blackish */
+  --color-black: hsl(0 0% 100%);   /* Maps text-black to white */
+  
+  /* Invert slate scale so text-slate-300 (light gray in dark mode) becomes dark gray */
+  --color-slate-50: hsl(222 47% 11%);
+  --color-slate-100: hsl(215 28% 17%);
+  --color-slate-200: hsl(217 19% 27%);
+  --color-slate-300: hsl(215 14% 34%);
+  --color-slate-400: hsl(215 16% 40%);
+  --color-slate-500: hsl(215 20% 55%);
+  --color-slate-600: hsl(215 14% 75%);
+  --color-slate-700: hsl(217 19% 85%);
+  --color-slate-800: hsl(215 28% 92%);
+  --color-slate-900: hsl(222 47% 96%);
+}
+
+/* Tailwind v4 source scanning */
 @source "../components/**/*.tsx";
 @source "../app/**/*.tsx";
 @source "../lib/**/*.ts";
@@ -9,228 +80,293 @@
 
 @layer base {
   :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 199 89% 48%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 199 89% 48%;
+    /* Map CSS variables expected by components */
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 214 32% 91%;
+    --secondary-foreground: 215 25% 27%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 60%;
     --radius: 0.5rem;
 
-    /* RoadSense custom tokens */
+    /* RoadSense Custom Tokens */
+    --rs-primary: 217 91% 60%;
+    --rs-primary-soft: 214 94% 90%;
+    --rs-primary-glow: 217 91% 60% / 0.1;
     --rs-cyan: 199 89% 48%;
-    --rs-cyan-glow: 0 0 20px hsl(199 89% 48% / 0.4);
-    --rs-danger: 0 72% 51%;
+    --rs-cyan-glow: 199 89% 48% / 0.1;
+    --rs-danger: 0 84% 60%;
     --rs-warning: 38 92% 50%;
-    --rs-safe: 142 71% 45%;
-    --rs-panel: 220 13% 9%;
-    --rs-panel-border: 220 13% 18%;
-    --rs-road: 220 13% 12%;
-  }
-}
+    --rs-safe: 152 69% 31%;
+    --rs-info: 217 91% 60%;
 
-@layer base {
-  * {
+    /* Simple panels */
+    --rs-panel: 0 0% 100%;
+    --rs-panel-elevated: 0 0% 100%;
+    --rs-panel-border: 214 32% 91%;
+
+    /* Clean realistic road */
+    --rs-road: 215 16% 47%;
+    --rs-road-light: 215 20% 65%;
+    --rs-road-dark: 215 19% 35%;
+
+    /* Simple terrain */
+    --rs-soil: 214 32% 91%;
+    --rs-dust: 210 40% 96%;
+    --rs-sand: 48 100% 96%;
+    --rs-road-marking: 0 0% 100%;
+  }
+
+  *,
+  ::before,
+  ::after {
     border-color: hsl(var(--border));
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
+    margin: 0;
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: "Inter", sans-serif;
+    text-rendering: optimizeLegibility;
   }
+
+  ::selection {
+    background: hsl(var(--rs-primary) / 0.2);
+    color: hsl(var(--foreground));
+  }
+
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
+
   ::-webkit-scrollbar-track {
     background: transparent;
   }
+
   ::-webkit-scrollbar-thumb {
     background-color: hsl(var(--border));
     border-radius: 9999px;
   }
+
   ::-webkit-scrollbar-thumb:hover {
     background-color: hsl(var(--muted-foreground));
   }
 }
 
 @layer components {
-  /* ─── Glass Panel ──────────────────────────────────────────── */
+  /* Simple Panels */
   .rs-panel {
-    @apply bg-slate-900/80 border border-slate-700/50 rounded-xl backdrop-blur-sm;
+    @apply rounded-xl border bg-card shadow-sm;
+    border-color: hsl(var(--rs-panel-border));
   }
+
   .rs-panel-glow {
-    background-color: rgb(15 23 42 / 0.8);
-    border: 1px solid rgb(51 65 85 / 0.5);
-    border-radius: 0.75rem;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 10px 15px -3px rgb(34 197 255 / 0.05);
+    @apply rounded-xl border bg-card shadow-md;
+    border-color: hsl(var(--rs-primary) / 0.3);
   }
 
-  /* ─── Risk Level Colors ────────────────────────────────────── */
-  .risk-safe { @apply text-emerald-400; }
-  .risk-low { @apply text-green-400; }
-  .risk-medium { @apply text-amber-400; }
-  .risk-high { @apply text-orange-500; }
-  .risk-critical { @apply text-red-500; }
+  .rs-panel-elevated {
+    @apply rounded-xl border bg-card shadow-lg;
+    border-color: hsl(var(--rs-panel-border));
+  }
 
-  .risk-bg-safe { @apply bg-emerald-500/10 border-emerald-500/30; }
-  .risk-bg-low { @apply bg-green-500/10 border-green-500/30; }
-  .risk-bg-medium { @apply bg-amber-500/10 border-amber-500/30; }
-  .risk-bg-high { @apply bg-orange-500/10 border-orange-500/30; }
-  .risk-bg-critical { @apply bg-red-500/10 border-red-500/30 animate-pulse; }
+  /* Risk Levels */
+  .risk-safe { @apply text-emerald-600; text-shadow: none; }
+  .risk-low { @apply text-blue-600; text-shadow: none; }
+  .risk-medium { @apply text-amber-600; text-shadow: none; }
+  .risk-high { @apply text-amber-600; text-shadow: none; }
+  .risk-critical { @apply text-red-600 font-medium; text-shadow: none; }
 
-  /* ─── Decision State Colors ────────────────────────────────── */
-  .decision-cruise { @apply text-cyan-400 bg-cyan-500/10 border-cyan-500/30; }
-  .decision-follow { @apply text-blue-400 bg-blue-500/10 border-blue-500/30; }
-  .decision-slow_down { @apply text-amber-400 bg-amber-500/10 border-amber-500/30; }
-  .decision-stop { @apply text-red-400 bg-red-500/10 border-red-500/30; }
-  .decision-overtake { @apply text-purple-400 bg-purple-500/10 border-purple-500/30; }
-  .decision-yield { @apply text-orange-400 bg-orange-500/10 border-orange-500/30; }
-  .decision-replan { @apply text-yellow-400 bg-yellow-500/10 border-yellow-500/30; }
-  .decision-emergency_brake { @apply text-red-400 bg-red-500/20 border-red-500/50 animate-pulse; }
+  .risk-bg-safe { @apply bg-emerald-50 border-emerald-500/20; }
+  .risk-bg-low { @apply bg-blue-50 border-blue-500/20; }
+  .risk-bg-medium { @apply bg-amber-50 border-amber-500/20; }
+  .risk-bg-high { @apply bg-amber-50 border-amber-600/30; }
+  .risk-bg-critical {
+    @apply bg-red-50 border-red-500/30;
+    animation: none;
+  }
 
-  /* ─── Mono Data Display ────────────────────────────────────── */
+  /* Decision States */
+  .decision-cruise { @apply text-blue-600 bg-blue-50 border-blue-500/20; }
+  .decision-follow { @apply text-amber-600 bg-amber-50 border-amber-500/20; }
+  .decision-slow_down { @apply text-amber-600 bg-amber-50 border-amber-500/20; }
+  .decision-stop { @apply text-red-600 bg-red-50 border-red-500/30; }
+  .decision-overtake { @apply text-blue-600 bg-blue-50 border-blue-500/20; }
+  .decision-yield { @apply text-amber-600 bg-amber-50 border-amber-500/20; }
+  .decision-replan { @apply text-blue-600 bg-blue-50 border-blue-500/20; }
+  .decision-emergency_brake {
+    @apply text-red-600 bg-red-50 border-red-600/40;
+    animation: none;
+  }
+
+  /* Typography */
   .rs-data {
-    @apply font-mono text-cyan-400 tabular-nums;
+    @apply font-mono text-foreground tabular-nums;
   }
+
   .rs-label {
-    @apply text-xs font-medium text-slate-400 uppercase tracking-wider;
+    @apply text-[11px] font-medium text-muted-foreground uppercase tracking-wide;
   }
 
-  /* ─── Animated Scan Line ───────────────────────────────────── */
+  .rs-metric {
+    @apply font-mono text-foreground font-semibold tabular-nums;
+    text-shadow: none;
+  }
+
+  /* Disabled Animations for clean UI */
   .scan-line {
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      hsl(199 89% 48% / 0.15) 50%,
-      transparent 100%
-    );
-    animation: scan 3s linear infinite;
+    background: transparent;
+    animation: none;
   }
 
-  /* ─── Simulation Canvas Container ─────────────────────────── */
+  /* Simulation Canvas */
   .sim-viewport {
-    @apply relative rounded-xl overflow-hidden border border-slate-700/50;
-    background: #0a0f1a;
+    @apply relative rounded-xl overflow-hidden;
+    border: 1px solid hsl(var(--border));
+    background: hsl(210 40% 96%); /* Very light gray */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
   }
 
-  /* ─── Gradient Borders ─────────────────────────────────────── */
+  /* Simple Solid Border */
   .gradient-border {
-    background: linear-gradient(hsl(222.2 84% 4.9%), hsl(222.2 84% 4.9%)) padding-box,
-                linear-gradient(135deg, hsl(199 89% 48%), hsl(262 83% 58%)) border-box;
-    border: 1px solid transparent;
+    background: white;
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
   }
 
-  /* ─── HUD Overlay ──────────────────────────────────────────── */
+  /* Disabled HUD Overlay */
   .hud-overlay {
-    @apply absolute top-0 left-0 right-0 bottom-0 pointer-events-none;
-    background: 
-      radial-gradient(ellipse at 50% 0%, hsl(199 89% 48% / 0.03) 0%, transparent 70%),
-      linear-gradient(180deg, hsl(220 13% 9% / 0.4) 0%, transparent 15%, transparent 85%, hsl(220 13% 9% / 0.4) 100%);
+    @apply absolute inset-0 pointer-events-none;
+    background: transparent;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
   }
 
-  /* ─── Navigation Active State ──────────────────────────────── */
+  /* Navigation */
   .nav-item-active {
-    @apply bg-cyan-500/10 text-cyan-400 border-r-2 border-cyan-500;
+    @apply bg-blue-50 text-blue-600 font-medium;
+    border-right: 2px solid hsl(var(--rs-primary));
+    text-shadow: none;
   }
+
   .nav-item {
-    @apply text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-colors;
+    @apply text-muted-foreground hover:text-foreground hover:bg-muted transition-colors;
+  }
+
+  /* Clean Buttons */
+  .rs-button-primary {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 font-medium transition-all duration-200;
+    color: white;
+    background: hsl(var(--rs-primary));
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+
+  .rs-button-primary:hover {
+    background: hsl(var(--rs-primary) / 0.9);
+  }
+
+  .rs-button-secondary {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 font-medium text-foreground transition-all duration-200;
+    background: white;
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+
+  .rs-button-secondary:hover {
+    @apply text-foreground bg-muted;
   }
 }
 
 @layer utilities {
-  /* ─── Glow Effects ─────────────────────────────────────────── */
-  .glow-cyan {
-    text-shadow: 0 0 20px hsl(199 89% 48% / 0.8);
-  }
-  .glow-sm {
-    box-shadow: 0 0 15px hsl(199 89% 48% / 0.3);
-  }
-  .glow-md {
-    box-shadow: 0 0 30px hsl(199 89% 48% / 0.4);
-  }
+  .glow-cyan { text-shadow: none; }
+  .glow-sm { box-shadow: none; }
+  .glow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+  .glow-primary { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
 
-  /* ─── Animations ───────────────────────────────────────────── */
-  .animate-pulse-slow {
-    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-  .animate-grid-flow {
-    animation: grid-flow 20s linear infinite;
-  }
+  .animate-pulse-slow { animation: none; }
+  .animate-float { animation: none; }
+  .animate-grid-flow { animation: none; }
 
-  /* ─── Text Utilities ───────────────────────────────────────── */
   .text-gradient {
-    @apply bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent;
+    @apply text-blue-600;
+    background-image: none;
   }
+
   .text-gradient-warm {
-    @apply bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent;
+    @apply text-amber-600;
+    background-image: none;
+  }
+
+  .text-gradient-metal {
+    @apply text-slate-700;
+    background-image: none;
   }
 }
 
-/* ─── Keyframes ──────────────────────────────────────────────── */
-@keyframes scan {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
-}
+/* Disabled Animations */
+@keyframes scan { }
+@keyframes float { }
+@keyframes grid-flow { }
+@keyframes critical-pulse { }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes grid-flow {
-  0% { background-position: 0 0; }
-  100% { background-position: 60px 60px; }
-}
-
-/* ─── Simulation Road Grid ───────────────────────────────────── */
+/* Simple Simulation Grid */
 .road-grid {
-  background-image: 
-    linear-gradient(hsl(220 13% 18% / 0.3) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(220 13% 18% / 0.3) 1px, transparent 1px);
+  background-image:
+    linear-gradient(hsl(215 16% 47% / 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(215 16% 47% / 0.1) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
-/* ─── Landing Page Animated Background ──────────────────────── */
 .hero-grid {
-  background-image: 
-    linear-gradient(hsl(199 89% 48% / 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(199 89% 48% / 0.05) 1px, transparent 1px);
+  background-image:
+    linear-gradient(hsl(214 32% 91%) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(214 32% 91%) 1px, transparent 1px);
   background-size: 60px 60px;
-  animation: grid-flow 20s linear infinite;
+  animation: none;
 }
 
-/* ─── Focus Styles (a11y) ────────────────────────────────────── */
+.rs-road-surface {
+  background: hsl(var(--rs-road));
+}
+
+.rs-road-edge {
+  background: hsl(var(--rs-road-light));
+}
+
+.rs-road-marking {
+  background-color: hsl(var(--rs-road-marking));
+  box-shadow: none;
+}
+
+.rs-terrain {
+  background-color: hsl(var(--rs-soil));
+}
+
+.rs-dust {
+  background-color: hsl(var(--rs-dust));
+}
+
 :focus-visible {
   outline-width: 2px;
+  outline-style: solid;
   outline-offset: 2px;
-  outline-color: #06b6d4;
-}
-
-/* ─── Reduced Motion ─────────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  .animate-pulse,
-  .animate-pulse-slow,
-  .animate-float,
-  .animate-grid-flow,
-  .scan-line {
-    animation: none !important;
-  }
+  outline-color: hsl(var(--rs-primary));
 }
